@@ -67,3 +67,18 @@ func (c *Client) Addgateway(ctx context.Context, gateway_ip string, gateway_port
 
 	return *gatewayFromProto(resp), nil
 }
+
+func (c *Client) ConnectAgent(ctx context.Context, agent_domain string, gateway_id string, gateway_domain string) (Agent, error) {
+
+	agentReq := &pb.AgentConnectionRequest{
+		AgentDomain: agent_domain,
+		GatewayId:   gateway_id,
+		Domain:      gateway_domain,
+	}
+
+	resp, err := c.grpc.RegisterAgent(ctx, agentReq)
+	if err != nil {
+		return Agent{}, err
+	}
+	return *agentFromProto(resp), nil
+}
