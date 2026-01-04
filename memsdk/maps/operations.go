@@ -46,7 +46,7 @@ func (c *Client) ResolveGatewayForAgent(ctx context.Context, region string) ([]G
 	return out, nil
 }
 
-func (c *Client) Addgateway(ctx context.Context, region string, gateway_ip string, gateway_port int32, gateway_domain string, credhash string) (Gateway, error) {
+func (c *Client) Addgateway(ctx context.Context, region string, gateway_ip string, gateway_port int32, credhash string) (Gateway, error) {
 	gateway := &pb.GatewayPutRequest{
 		Region:             region,
 		GatewayIp:          gateway_ip,
@@ -68,7 +68,7 @@ func (c *Client) Addgateway(ctx context.Context, region string, gateway_ip strin
 	return *gatewayFromProto(resp), nil
 }
 
-func (c *Client) ConnectAgent(ctx context.Context, agent_domain string, gateway_id string, gateway_domain string, creadhash string, region string) (Agent, error) {
+func (c *Client) ConnectAgent(ctx context.Context, agent_domain string, gateway_id string, creadhash string, region string) (Agent, error) {
 
 	agentReq := &pb.AgentConnectionRequest{
 		AgentDomain:        agent_domain,
