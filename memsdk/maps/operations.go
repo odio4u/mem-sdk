@@ -83,3 +83,20 @@ func (c *Client) ConnectAgent(ctx context.Context, agent_domain string, gateway_
 	}
 	return *agentFromProto(resp), nil
 }
+
+func (c *Client) GetGatewayInfo(ctx context.Context, region string) ([]Gateway, error) {
+	agentReq := &pb.GatewayHandshake{
+		Region: region,
+	}
+
+	resp, err := c.grpc.ResolveGatewayForAgent(ctx, agentReq)
+	if err != nil {
+		return nil, err
+	}
+
+	var out []Gateway
+	for _, g := range resp.Gateways {
+		out = append(out, *gatewayFromProto(g))
+	}
+	return out, nil
+}
