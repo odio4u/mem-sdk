@@ -3,7 +3,7 @@ syntax = "proto3";
 
 package maps;
 
-option go_package = "github.com/Purple-House/mem-sdk/memsdk/protobufs/maps";
+option go_package = "github.com/Purple-House/memstore/registry/proto;maps";
 
 
 // protoc --go_out=. --go-grpc_out=../. --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative proto/maps/maps.proto
@@ -33,9 +33,9 @@ message Error {
 message GatewayPutRequest {
     string region = 1;
     string gateway_ip = 2;
-    string gateway_domain = 3;
     int32 gateway_port = 4;
     Capacity capacity = 5;
+    string verifiable_cred_hash = 6;
 }
 
 message Capacity {
@@ -48,24 +48,26 @@ message Capacity {
 message GatewayResponse {
     string gateway_id = 1;
     string gateway_ip = 2;
-    string gateway_domain = 3;
-    Error error = 4;
+    string gateway_address = 3;
+    Capacity capacity = 4;
+    Error error = 5;
 }
 
 message AgentConnectionRequest {
-    string domain = 1 ;
-    string gateway_id = 2;
-    string region = 3;
-    string agent_domain = 4;
+    string agent_domain = 1;
+    string verifiable_cred_hash = 2;
+    string gateway_id = 3;
+    string region = 4;
 }
 
 message AgentResponse {
     string agent_id = 1;
-    string agent_domain =2;
-    string gateway_id=3;
-    string gateway_domain = 4;
+    string agent_domain = 2;
+    string gateway_id = 3;
+    string gateway_address = 4;
     Capacity capacity = 5;
-    Error error = 6;
+    string gateway_ip = 6;
+    Error error = 7;
 }
 
 message GatewayHandshake {
@@ -80,4 +82,10 @@ message MultipleGateways {
 message GatewayProxy {
     string agent_domain = 1;
     string region = 2;
+    string proxy_id = 3;
+}
+
+message ProxyConnectionRequest {
+    string region = 1;
+    string verifiable_cred_hash = 3;
 }

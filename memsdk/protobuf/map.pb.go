@@ -135,14 +135,14 @@ func (x *Error) GetMessage() string {
 }
 
 type GatewayPutRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Region        string                 `protobuf:"bytes,1,opt,name=region,proto3" json:"region,omitempty"`
-	GatewayIp     string                 `protobuf:"bytes,2,opt,name=gateway_ip,json=gatewayIp,proto3" json:"gateway_ip,omitempty"`
-	GatewayDomain string                 `protobuf:"bytes,3,opt,name=gateway_domain,json=gatewayDomain,proto3" json:"gateway_domain,omitempty"`
-	GatewayPort   int32                  `protobuf:"varint,4,opt,name=gateway_port,json=gatewayPort,proto3" json:"gateway_port,omitempty"`
-	Capacity      *Capacity              `protobuf:"bytes,5,opt,name=capacity,proto3" json:"capacity,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Region             string                 `protobuf:"bytes,1,opt,name=region,proto3" json:"region,omitempty"`
+	GatewayIp          string                 `protobuf:"bytes,2,opt,name=gateway_ip,json=gatewayIp,proto3" json:"gateway_ip,omitempty"`
+	GatewayPort        int32                  `protobuf:"varint,4,opt,name=gateway_port,json=gatewayPort,proto3" json:"gateway_port,omitempty"`
+	Capacity           *Capacity              `protobuf:"bytes,5,opt,name=capacity,proto3" json:"capacity,omitempty"`
+	VerifiableCredHash string                 `protobuf:"bytes,6,opt,name=verifiable_cred_hash,json=verifiableCredHash,proto3" json:"verifiable_cred_hash,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *GatewayPutRequest) Reset() {
@@ -189,13 +189,6 @@ func (x *GatewayPutRequest) GetGatewayIp() string {
 	return ""
 }
 
-func (x *GatewayPutRequest) GetGatewayDomain() string {
-	if x != nil {
-		return x.GatewayDomain
-	}
-	return ""
-}
-
 func (x *GatewayPutRequest) GetGatewayPort() int32 {
 	if x != nil {
 		return x.GatewayPort
@@ -208,6 +201,13 @@ func (x *GatewayPutRequest) GetCapacity() *Capacity {
 		return x.Capacity
 	}
 	return nil
+}
+
+func (x *GatewayPutRequest) GetVerifiableCredHash() string {
+	if x != nil {
+		return x.VerifiableCredHash
+	}
+	return ""
 }
 
 type Capacity struct {
@@ -279,13 +279,14 @@ func (x *Capacity) GetBandwidth() int32 {
 }
 
 type GatewayResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	GatewayId     string                 `protobuf:"bytes,1,opt,name=gateway_id,json=gatewayId,proto3" json:"gateway_id,omitempty"`
-	GatewayIp     string                 `protobuf:"bytes,2,opt,name=gateway_ip,json=gatewayIp,proto3" json:"gateway_ip,omitempty"`
-	GatewayDomain string                 `protobuf:"bytes,3,opt,name=gateway_domain,json=gatewayDomain,proto3" json:"gateway_domain,omitempty"`
-	Error         *Error                 `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	GatewayId      string                 `protobuf:"bytes,1,opt,name=gateway_id,json=gatewayId,proto3" json:"gateway_id,omitempty"`
+	GatewayIp      string                 `protobuf:"bytes,2,opt,name=gateway_ip,json=gatewayIp,proto3" json:"gateway_ip,omitempty"`
+	GatewayAddress string                 `protobuf:"bytes,3,opt,name=gateway_address,json=gatewayAddress,proto3" json:"gateway_address,omitempty"`
+	Capacity       *Capacity              `protobuf:"bytes,4,opt,name=capacity,proto3" json:"capacity,omitempty"`
+	Error          *Error                 `protobuf:"bytes,5,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *GatewayResponse) Reset() {
@@ -332,11 +333,18 @@ func (x *GatewayResponse) GetGatewayIp() string {
 	return ""
 }
 
-func (x *GatewayResponse) GetGatewayDomain() string {
+func (x *GatewayResponse) GetGatewayAddress() string {
 	if x != nil {
-		return x.GatewayDomain
+		return x.GatewayAddress
 	}
 	return ""
+}
+
+func (x *GatewayResponse) GetCapacity() *Capacity {
+	if x != nil {
+		return x.Capacity
+	}
+	return nil
 }
 
 func (x *GatewayResponse) GetError() *Error {
@@ -347,13 +355,13 @@ func (x *GatewayResponse) GetError() *Error {
 }
 
 type AgentConnectionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Domain        string                 `protobuf:"bytes,1,opt,name=domain,proto3" json:"domain,omitempty"`
-	GatewayId     string                 `protobuf:"bytes,2,opt,name=gateway_id,json=gatewayId,proto3" json:"gateway_id,omitempty"`
-	Region        string                 `protobuf:"bytes,3,opt,name=region,proto3" json:"region,omitempty"`
-	AgentDomain   string                 `protobuf:"bytes,4,opt,name=agent_domain,json=agentDomain,proto3" json:"agent_domain,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	AgentDomain        string                 `protobuf:"bytes,1,opt,name=agent_domain,json=agentDomain,proto3" json:"agent_domain,omitempty"`
+	VerifiableCredHash string                 `protobuf:"bytes,2,opt,name=verifiable_cred_hash,json=verifiableCredHash,proto3" json:"verifiable_cred_hash,omitempty"`
+	GatewayId          string                 `protobuf:"bytes,3,opt,name=gateway_id,json=gatewayId,proto3" json:"gateway_id,omitempty"`
+	Region             string                 `protobuf:"bytes,4,opt,name=region,proto3" json:"region,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *AgentConnectionRequest) Reset() {
@@ -386,9 +394,16 @@ func (*AgentConnectionRequest) Descriptor() ([]byte, []int) {
 	return file_protobuf_map_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *AgentConnectionRequest) GetDomain() string {
+func (x *AgentConnectionRequest) GetAgentDomain() string {
 	if x != nil {
-		return x.Domain
+		return x.AgentDomain
+	}
+	return ""
+}
+
+func (x *AgentConnectionRequest) GetVerifiableCredHash() string {
+	if x != nil {
+		return x.VerifiableCredHash
 	}
 	return ""
 }
@@ -407,23 +422,17 @@ func (x *AgentConnectionRequest) GetRegion() string {
 	return ""
 }
 
-func (x *AgentConnectionRequest) GetAgentDomain() string {
-	if x != nil {
-		return x.AgentDomain
-	}
-	return ""
-}
-
 type AgentResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	AgentDomain   string                 `protobuf:"bytes,2,opt,name=agent_domain,json=agentDomain,proto3" json:"agent_domain,omitempty"`
-	GatewayId     string                 `protobuf:"bytes,3,opt,name=gateway_id,json=gatewayId,proto3" json:"gateway_id,omitempty"`
-	GatewayDomain string                 `protobuf:"bytes,4,opt,name=gateway_domain,json=gatewayDomain,proto3" json:"gateway_domain,omitempty"`
-	Capacity      *Capacity              `protobuf:"bytes,5,opt,name=capacity,proto3" json:"capacity,omitempty"`
-	Error         *Error                 `protobuf:"bytes,6,opt,name=error,proto3" json:"error,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	AgentId        string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	AgentDomain    string                 `protobuf:"bytes,2,opt,name=agent_domain,json=agentDomain,proto3" json:"agent_domain,omitempty"`
+	GatewayId      string                 `protobuf:"bytes,3,opt,name=gateway_id,json=gatewayId,proto3" json:"gateway_id,omitempty"`
+	GatewayAddress string                 `protobuf:"bytes,4,opt,name=gateway_address,json=gatewayAddress,proto3" json:"gateway_address,omitempty"`
+	Capacity       *Capacity              `protobuf:"bytes,5,opt,name=capacity,proto3" json:"capacity,omitempty"`
+	GatewayIp      string                 `protobuf:"bytes,6,opt,name=gateway_ip,json=gatewayIp,proto3" json:"gateway_ip,omitempty"`
+	Error          *Error                 `protobuf:"bytes,7,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *AgentResponse) Reset() {
@@ -477,9 +486,9 @@ func (x *AgentResponse) GetGatewayId() string {
 	return ""
 }
 
-func (x *AgentResponse) GetGatewayDomain() string {
+func (x *AgentResponse) GetGatewayAddress() string {
 	if x != nil {
-		return x.GatewayDomain
+		return x.GatewayAddress
 	}
 	return ""
 }
@@ -489,6 +498,13 @@ func (x *AgentResponse) GetCapacity() *Capacity {
 		return x.Capacity
 	}
 	return nil
+}
+
+func (x *AgentResponse) GetGatewayIp() string {
+	if x != nil {
+		return x.GatewayIp
+	}
+	return ""
 }
 
 func (x *AgentResponse) GetError() *Error {
@@ -598,6 +614,7 @@ type GatewayProxy struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AgentDomain   string                 `protobuf:"bytes,1,opt,name=agent_domain,json=agentDomain,proto3" json:"agent_domain,omitempty"`
 	Region        string                 `protobuf:"bytes,2,opt,name=region,proto3" json:"region,omitempty"`
+	ProxyId       string                 `protobuf:"bytes,3,opt,name=proxy_id,json=proxyId,proto3" json:"proxy_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -646,6 +663,65 @@ func (x *GatewayProxy) GetRegion() string {
 	return ""
 }
 
+func (x *GatewayProxy) GetProxyId() string {
+	if x != nil {
+		return x.ProxyId
+	}
+	return ""
+}
+
+type ProxyConnectionRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Region             string                 `protobuf:"bytes,1,opt,name=region,proto3" json:"region,omitempty"`
+	VerifiableCredHash string                 `protobuf:"bytes,3,opt,name=verifiable_cred_hash,json=verifiableCredHash,proto3" json:"verifiable_cred_hash,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *ProxyConnectionRequest) Reset() {
+	*x = ProxyConnectionRequest{}
+	mi := &file_protobuf_map_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ProxyConnectionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProxyConnectionRequest) ProtoMessage() {}
+
+func (x *ProxyConnectionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_map_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProxyConnectionRequest.ProtoReflect.Descriptor instead.
+func (*ProxyConnectionRequest) Descriptor() ([]byte, []int) {
+	return file_protobuf_map_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ProxyConnectionRequest) GetRegion() string {
+	if x != nil {
+		return x.Region
+	}
+	return ""
+}
+
+func (x *ProxyConnectionRequest) GetVerifiableCredHash() string {
+	if x != nil {
+		return x.VerifiableCredHash
+	}
+	return ""
+}
+
 var File_protobuf_map_proto protoreflect.FileDescriptor
 
 const file_protobuf_map_proto_rawDesc = "" +
@@ -653,48 +729,55 @@ const file_protobuf_map_proto_rawDesc = "" +
 	"\x12protobuf/map.proto\x12\x04maps\"F\n" +
 	"\x05Error\x12#\n" +
 	"\x04code\x18\x01 \x01(\x0e2\x0f.maps.ErrorCodeR\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\xc0\x01\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xcb\x01\n" +
 	"\x11GatewayPutRequest\x12\x16\n" +
 	"\x06region\x18\x01 \x01(\tR\x06region\x12\x1d\n" +
 	"\n" +
-	"gateway_ip\x18\x02 \x01(\tR\tgatewayIp\x12%\n" +
-	"\x0egateway_domain\x18\x03 \x01(\tR\rgatewayDomain\x12!\n" +
+	"gateway_ip\x18\x02 \x01(\tR\tgatewayIp\x12!\n" +
 	"\fgateway_port\x18\x04 \x01(\x05R\vgatewayPort\x12*\n" +
-	"\bcapacity\x18\x05 \x01(\v2\x0e.maps.CapacityR\bcapacity\"l\n" +
+	"\bcapacity\x18\x05 \x01(\v2\x0e.maps.CapacityR\bcapacity\x120\n" +
+	"\x14verifiable_cred_hash\x18\x06 \x01(\tR\x12verifiableCredHash\"l\n" +
 	"\bCapacity\x12\x10\n" +
 	"\x03cpu\x18\x01 \x01(\x05R\x03cpu\x12\x16\n" +
 	"\x06memory\x18\x02 \x01(\x05R\x06memory\x12\x18\n" +
 	"\astorage\x18\x03 \x01(\x05R\astorage\x12\x1c\n" +
-	"\tbandwidth\x18\x04 \x01(\x05R\tbandwidth\"\x99\x01\n" +
+	"\tbandwidth\x18\x04 \x01(\x05R\tbandwidth\"\xc7\x01\n" +
 	"\x0fGatewayResponse\x12\x1d\n" +
 	"\n" +
 	"gateway_id\x18\x01 \x01(\tR\tgatewayId\x12\x1d\n" +
 	"\n" +
-	"gateway_ip\x18\x02 \x01(\tR\tgatewayIp\x12%\n" +
-	"\x0egateway_domain\x18\x03 \x01(\tR\rgatewayDomain\x12!\n" +
-	"\x05error\x18\x04 \x01(\v2\v.maps.ErrorR\x05error\"\x8a\x01\n" +
-	"\x16AgentConnectionRequest\x12\x16\n" +
-	"\x06domain\x18\x01 \x01(\tR\x06domain\x12\x1d\n" +
+	"gateway_ip\x18\x02 \x01(\tR\tgatewayIp\x12'\n" +
+	"\x0fgateway_address\x18\x03 \x01(\tR\x0egatewayAddress\x12*\n" +
+	"\bcapacity\x18\x04 \x01(\v2\x0e.maps.CapacityR\bcapacity\x12!\n" +
+	"\x05error\x18\x05 \x01(\v2\v.maps.ErrorR\x05error\"\xa4\x01\n" +
+	"\x16AgentConnectionRequest\x12!\n" +
+	"\fagent_domain\x18\x01 \x01(\tR\vagentDomain\x120\n" +
+	"\x14verifiable_cred_hash\x18\x02 \x01(\tR\x12verifiableCredHash\x12\x1d\n" +
 	"\n" +
-	"gateway_id\x18\x02 \x01(\tR\tgatewayId\x12\x16\n" +
-	"\x06region\x18\x03 \x01(\tR\x06region\x12!\n" +
-	"\fagent_domain\x18\x04 \x01(\tR\vagentDomain\"\xe2\x01\n" +
+	"gateway_id\x18\x03 \x01(\tR\tgatewayId\x12\x16\n" +
+	"\x06region\x18\x04 \x01(\tR\x06region\"\x83\x02\n" +
 	"\rAgentResponse\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12!\n" +
 	"\fagent_domain\x18\x02 \x01(\tR\vagentDomain\x12\x1d\n" +
 	"\n" +
-	"gateway_id\x18\x03 \x01(\tR\tgatewayId\x12%\n" +
-	"\x0egateway_domain\x18\x04 \x01(\tR\rgatewayDomain\x12*\n" +
-	"\bcapacity\x18\x05 \x01(\v2\x0e.maps.CapacityR\bcapacity\x12!\n" +
-	"\x05error\x18\x06 \x01(\v2\v.maps.ErrorR\x05error\"*\n" +
+	"gateway_id\x18\x03 \x01(\tR\tgatewayId\x12'\n" +
+	"\x0fgateway_address\x18\x04 \x01(\tR\x0egatewayAddress\x12*\n" +
+	"\bcapacity\x18\x05 \x01(\v2\x0e.maps.CapacityR\bcapacity\x12\x1d\n" +
+	"\n" +
+	"gateway_ip\x18\x06 \x01(\tR\tgatewayIp\x12!\n" +
+	"\x05error\x18\a \x01(\v2\v.maps.ErrorR\x05error\"*\n" +
 	"\x10GatewayHandshake\x12\x16\n" +
 	"\x06region\x18\x01 \x01(\tR\x06region\"h\n" +
 	"\x10MultipleGateways\x121\n" +
 	"\bgateways\x18\x01 \x03(\v2\x15.maps.GatewayResponseR\bgateways\x12!\n" +
-	"\x05error\x18\x02 \x01(\v2\v.maps.ErrorR\x05error\"I\n" +
+	"\x05error\x18\x02 \x01(\v2\v.maps.ErrorR\x05error\"d\n" +
 	"\fGatewayProxy\x12!\n" +
 	"\fagent_domain\x18\x01 \x01(\tR\vagentDomain\x12\x16\n" +
-	"\x06region\x18\x02 \x01(\tR\x06region*\xd3\x01\n" +
+	"\x06region\x18\x02 \x01(\tR\x06region\x12\x19\n" +
+	"\bproxy_id\x18\x03 \x01(\tR\aproxyId\"b\n" +
+	"\x16ProxyConnectionRequest\x12\x16\n" +
+	"\x06region\x18\x01 \x01(\tR\x06region\x120\n" +
+	"\x14verifiable_cred_hash\x18\x03 \x01(\tR\x12verifiableCredHash*\xd3\x01\n" +
 	"\tErrorCode\x12\x1a\n" +
 	"\x16ERROR_CODE_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bERROR_CODE_INVALID_ARGUMENT\x10\x01\x12\x18\n" +
@@ -707,7 +790,7 @@ const file_protobuf_map_proto_rawDesc = "" +
 	"\x0fRegisterGateway\x12\x17.maps.GatewayPutRequest\x1a\x15.maps.GatewayResponse\x12B\n" +
 	"\rRegisterAgent\x12\x1c.maps.AgentConnectionRequest\x1a\x13.maps.AgentResponse\x12H\n" +
 	"\x16ResolveGatewayForAgent\x12\x16.maps.GatewayHandshake\x1a\x16.maps.MultipleGateways\x12C\n" +
-	"\x16ResolveGatewayForProxy\x12\x12.maps.GatewayProxy\x1a\x15.maps.GatewayResponseB7Z5github.com/Purple-House/mem-sdk/memsdk/protobufs/mapsb\x06proto3"
+	"\x16ResolveGatewayForProxy\x12\x12.maps.GatewayProxy\x1a\x15.maps.GatewayResponseB6Z4github.com/Purple-House/memstore/registry/proto;mapsb\x06proto3"
 
 var (
 	file_protobuf_map_proto_rawDescOnce sync.Once
@@ -722,7 +805,7 @@ func file_protobuf_map_proto_rawDescGZIP() []byte {
 }
 
 var file_protobuf_map_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_protobuf_map_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_protobuf_map_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_protobuf_map_proto_goTypes = []any{
 	(ErrorCode)(0),                 // 0: maps.ErrorCode
 	(*Error)(nil),                  // 1: maps.Error
@@ -734,28 +817,30 @@ var file_protobuf_map_proto_goTypes = []any{
 	(*GatewayHandshake)(nil),       // 7: maps.GatewayHandshake
 	(*MultipleGateways)(nil),       // 8: maps.MultipleGateways
 	(*GatewayProxy)(nil),           // 9: maps.GatewayProxy
+	(*ProxyConnectionRequest)(nil), // 10: maps.ProxyConnectionRequest
 }
 var file_protobuf_map_proto_depIdxs = []int32{
 	0,  // 0: maps.Error.code:type_name -> maps.ErrorCode
 	3,  // 1: maps.GatewayPutRequest.capacity:type_name -> maps.Capacity
-	1,  // 2: maps.GatewayResponse.error:type_name -> maps.Error
-	3,  // 3: maps.AgentResponse.capacity:type_name -> maps.Capacity
-	1,  // 4: maps.AgentResponse.error:type_name -> maps.Error
-	4,  // 5: maps.MultipleGateways.gateways:type_name -> maps.GatewayResponse
-	1,  // 6: maps.MultipleGateways.error:type_name -> maps.Error
-	2,  // 7: maps.Maps.RegisterGateway:input_type -> maps.GatewayPutRequest
-	5,  // 8: maps.Maps.RegisterAgent:input_type -> maps.AgentConnectionRequest
-	7,  // 9: maps.Maps.ResolveGatewayForAgent:input_type -> maps.GatewayHandshake
-	9,  // 10: maps.Maps.ResolveGatewayForProxy:input_type -> maps.GatewayProxy
-	4,  // 11: maps.Maps.RegisterGateway:output_type -> maps.GatewayResponse
-	6,  // 12: maps.Maps.RegisterAgent:output_type -> maps.AgentResponse
-	8,  // 13: maps.Maps.ResolveGatewayForAgent:output_type -> maps.MultipleGateways
-	4,  // 14: maps.Maps.ResolveGatewayForProxy:output_type -> maps.GatewayResponse
-	11, // [11:15] is the sub-list for method output_type
-	7,  // [7:11] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	3,  // 2: maps.GatewayResponse.capacity:type_name -> maps.Capacity
+	1,  // 3: maps.GatewayResponse.error:type_name -> maps.Error
+	3,  // 4: maps.AgentResponse.capacity:type_name -> maps.Capacity
+	1,  // 5: maps.AgentResponse.error:type_name -> maps.Error
+	4,  // 6: maps.MultipleGateways.gateways:type_name -> maps.GatewayResponse
+	1,  // 7: maps.MultipleGateways.error:type_name -> maps.Error
+	2,  // 8: maps.Maps.RegisterGateway:input_type -> maps.GatewayPutRequest
+	5,  // 9: maps.Maps.RegisterAgent:input_type -> maps.AgentConnectionRequest
+	7,  // 10: maps.Maps.ResolveGatewayForAgent:input_type -> maps.GatewayHandshake
+	9,  // 11: maps.Maps.ResolveGatewayForProxy:input_type -> maps.GatewayProxy
+	4,  // 12: maps.Maps.RegisterGateway:output_type -> maps.GatewayResponse
+	6,  // 13: maps.Maps.RegisterAgent:output_type -> maps.AgentResponse
+	8,  // 14: maps.Maps.ResolveGatewayForAgent:output_type -> maps.MultipleGateways
+	4,  // 15: maps.Maps.ResolveGatewayForProxy:output_type -> maps.GatewayResponse
+	12, // [12:16] is the sub-list for method output_type
+	8,  // [8:12] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_protobuf_map_proto_init() }
@@ -769,7 +854,7 @@ func file_protobuf_map_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_protobuf_map_proto_rawDesc), len(file_protobuf_map_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
