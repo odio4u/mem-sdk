@@ -17,11 +17,13 @@ type Capacity struct {
 }
 
 type Gateway struct {
-	ID       string
-	IP       string
-	Address  string
-	Capacity Capacity
-	Error    *Error
+	ID          string
+	IP          string
+	Address     string
+	GatewayPort int32
+	WssPort     int32
+	Capacity    Capacity
+	Error       *Error
 }
 
 type Agent struct {
@@ -29,6 +31,8 @@ type Agent struct {
 	Domain         string
 	GatewayID      string
 	GatewayAddress string
+	GatewayPort    int32
+	WssPort        int32
 	GatewayIP      string
 	Capacity       Capacity
 	Error          *Error
@@ -39,9 +43,11 @@ func gatewayFromProto(g *pb.GatewayResponse) *Gateway {
 		return nil
 	}
 	return &Gateway{
-		ID:      g.GatewayId,
-		IP:      g.GatewayIp,
-		Address: g.GatewayAddress,
+		ID:          g.GatewayId,
+		IP:          g.GatewayIp,
+		Address:     g.GatewayAddress,
+		WssPort:     g.WssPort,
+		GatewayPort: g.GatewayPort,
 		Capacity: Capacity{
 			CPU:       g.Capacity.Cpu,
 			Memory:    g.Capacity.Memory,
@@ -63,6 +69,8 @@ func agentFromProto(a *pb.AgentResponse) *Agent {
 		GatewayID:      a.GatewayId,
 		GatewayAddress: a.GatewayAddress,
 		GatewayIP:      a.GatewayIp,
+		GatewayPort:    a.GatewayPort,
+		WssPort:        a.WssPort,
 		Capacity: Capacity{
 			CPU:       a.Capacity.Cpu,
 			Memory:    a.Capacity.Memory,

@@ -33,12 +33,13 @@ func (c *Client) Close() error {
 	return c.grpc.Close()
 }
 
-func (c *Client) Addgateway(ctx context.Context, region string, gateway_ip string, gateway_port int32, credhash string) (Gateway, error) {
+func (c *Client) Addgateway(ctx context.Context, region string, gateway_ip string, gateway_port int32, credhash string, wss_port int32) (Gateway, error) {
 	gateway := &pb.GatewayPutRequest{
 		Region:             region,
 		GatewayIp:          gateway_ip,
 		GatewayPort:        gateway_port,
 		VerifiableCredHash: credhash,
+		WssPort:            wss_port,
 		Capacity: &pb.Capacity{
 			Cpu:       1,
 			Bandwidth: 20,
