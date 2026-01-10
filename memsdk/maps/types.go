@@ -23,7 +23,9 @@ type Gateway struct {
 	GatewayPort int32
 	WssPort     int32
 	Capacity    Capacity
-	Error       *Error
+	Identity    string
+
+	Error *Error
 }
 
 type Agent struct {
@@ -35,6 +37,7 @@ type Agent struct {
 	WssPort        int32
 	GatewayIP      string
 	Capacity       Capacity
+	Identity       string
 	Error          *Error
 }
 
@@ -48,6 +51,7 @@ func gatewayFromProto(g *pb.GatewayResponse) *Gateway {
 		Address:     g.GatewayAddress,
 		WssPort:     g.WssPort,
 		GatewayPort: g.GatewayPort,
+		Identity:    g.Identity,
 		Capacity: Capacity{
 			CPU:       g.Capacity.Cpu,
 			Memory:    g.Capacity.Memory,
@@ -71,6 +75,7 @@ func agentFromProto(a *pb.AgentResponse) *Agent {
 		GatewayIP:      a.GatewayIp,
 		GatewayPort:    a.GatewayPort,
 		WssPort:        a.WssPort,
+		Identity:       a.Identity,
 		Capacity: Capacity{
 			CPU:       a.Capacity.Cpu,
 			Memory:    a.Capacity.Memory,
