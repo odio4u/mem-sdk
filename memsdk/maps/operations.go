@@ -16,7 +16,7 @@ type AddRouterRequest struct {
 	Region     string
 	RouterIp   string
 	RouterPort int32
-	identity   string
+	Identity   string
 	RpcPort    int32
 }
 
@@ -46,7 +46,7 @@ func (c *Client) Addgateway(ctx context.Context, router AddRouterRequest) (Gatew
 		Region:             router.Region,
 		GatewayIp:          router.RouterIp,
 		GatewayPort:        router.RouterPort,
-		VerifiableCredHash: router.identity,
+		VerifiableCredHash: router.Identity,
 		WssPort:            router.RpcPort,
 		Capacity: &pb.Capacity{
 			Cpu:       1,
