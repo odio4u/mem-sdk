@@ -12,6 +12,14 @@ type Client struct {
 	grpc *pkg.Client
 }
 
+type AddRouterRequest struct {
+	Region     string
+	RouterIp   string
+	RouterPort int32
+	identity   string
+	RpcPort    int32
+}
+
 func NewSdkOperation(cfg pkg.Config) (*Client, error) {
 	if cfg.Address == "" {
 		return nil, errors.New("address must be set")
@@ -33,13 +41,13 @@ func (c *Client) Close() error {
 	return c.grpc.Close()
 }
 
-func (c *Client) Addgateway(ctx context.Context, region string, gateway_ip string, gateway_port int32, credhash string, wss_port int32) (Gateway, error) {
+func (c *Client) Addgateway(ctx context.Context, router AddRouterRequest) (Gateway, error) {
 	gateway := &pb.GatewayPutRequest{
-		Region:             region,
-		GatewayIp:          gateway_ip,
-		GatewayPort:        gateway_port,
-		VerifiableCredHash: credhash,
-		WssPort:            wss_port,
+		Region:             router.Region,
+		GatewayIp:          router.RouterIp,
+		GatewayPort:        router.RouterPort,
+		VerifiableCredHash: router.identity,
+		WssPort:            router.RpcPort,
 		Capacity: &pb.Capacity{
 			Cpu:       1,
 			Bandwidth: 20,
