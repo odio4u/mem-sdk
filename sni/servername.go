@@ -3,7 +3,19 @@ package sni
 import (
 	"encoding/binary"
 	"errors"
+	"fmt"
+	"strings"
 )
+
+func ExtractHostFromStream(data []byte) (string, error) {
+	lines := strings.Split(string(data), "\r\n")
+	for _, line := range lines {
+		if strings.HasPrefix(line, "Host:") {
+			return strings.TrimSpace(strings.TrimPrefix(line, "Host:")), nil
+		}
+	}
+	return "", fmt.Errorf("host header not found in request")
+}
 
 func parseTLSRecord(data []byte) ([]byte, error) {
 	if len(data) < 5 || data[0] != 0x16 {
